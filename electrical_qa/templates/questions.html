@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">
+        <i class="fas fa-list"></i> All Questions
+    </h1>
+    <p class="lead text-muted">Browse through all questions and answers</p>
+</div>
+
+{% if user.is_authenticated %}
+    <div class="text-end mb-4">
+        <a href="{% url 'ask_question' %}" class="btn btn-gradient">
+            <i class="fas fa-plus"></i> Ask New Question
+        </a>
+    </div>
+{% endif %}
+
+<div class="row">
+    {% for question in questions %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card question-card h-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <span class="badge badge-custom">{{ question.category }}</span>
+                    </div>
+                    <h5 class="card-title fw-bold flex-grow-1">
+                        {{ question.question_text|truncatewords:15 }}
+                    </h5>
+                    <div class="mt-3">
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-user"></i> <strong>{{ question.user.username }}</strong><br>
+                            <i class="fas fa-calendar"></i> {{ question.created_at|date:"M d, Y" }}<br>
+                            <i class="fas fa-comment"></i> {{ question.answers.count }} Answer(s)
+                        </p>
+                        <a href="{% url 'answer_detail' question.pk %}" class="btn btn-gradient btn-sm w-100">
+                            <i class="fas fa-arrow-right"></i> View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="card text-center p-5">
+                <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                <h3 class="fw-bold">No Questions Yet</h3>
+                <p class="text-muted">Be the first to ask a question!</p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'ask_question' %}" class="btn btn-gradient mt-3">
+                        <i class="fas fa-plus"></i> Ask First Question
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,11 +1,26 @@
-*.pyc
+# Environment variables
+.env
+*.env
+
+# Python
 __pycache__/
-db.sqlite3
-/staticfiles/
-/media/
-/.env
-.env.*
-*.log
-node_modules/
+*.py[cod]
+*.class
+*.so
+.Python
 venv/
+env/
+
+# Database
 *.sqlite3
+db.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
